@@ -11,6 +11,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Touch screen to play tone.  X axis is pitch" />
+        android:text="@string/tv_topBanner" />
+
+    <RadioButton
+        android:id="@+id/btn_sinWave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:text="@string/btn_sinWave" />
 
 </RelativeLayout>
