@@ -1,8 +1,7 @@
 package com.example.audioapp;
 
-import java.util.ArrayList;
-
 import com.example.audioapp.R.id;
+import com.stanford.AudioEngine.AudioEngine;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,27 +28,9 @@ public class MainActivity extends Activity {
 	
 	//The wave button- needs to be added to the UI
 	RadioButton btnWave;
-	
-	//create an arraylist of sinwaves
-	ArrayList<Wave> waveArray = new ArrayList<Wave>();
-
-	/**
-	 * Generate a list of waves for polyphony.
-	 * The polyphony final is the limiting variable on size.
-	 */
-	void generateWaveList(int i){
-		switch(i){
-		//Sin Wave was selected
-		case 1:
-			for(int j = 0; j < CONSTANTS.POLYPHONY;j++){
-				waveArray.add(new SinWave());
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
+		
+	//Create the audio engine
+	AudioEngine ae = new AudioEngine();
 
 	/**
 	 * ONCREATE
@@ -63,8 +44,8 @@ public class MainActivity extends Activity {
 		btnWave = (RadioButton) findViewById(id.btn_sinWave);
 		//Grab the view for the listener
 		View mainView = (View) findViewById(R.id.view);
-		//Generate a list of waves for polyphony reasons
-		generateWaveList(1);
+		//Init the audio engine
+		ae.InitAudioEngine();
 
 		/**
 		 * Create a gesture detector. Contruct with context and a gesture
@@ -74,15 +55,12 @@ public class MainActivity extends Activity {
 		mainView.setOnTouchListener(new OnTouchListener() {
 			//OnTouch method needs to be implemented.
 			public boolean onTouch(View v, MotionEvent event) {
-				//Grab the event and do the ligc right here, no need to do it in the gesture listener.  
+				//Grab the event and do the logic right here, no need to do it in the gesture listener.  
 				if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-					waveArray.get(1).setFreqOfTone(event.getY()*2);
-					waveArray.get(1).setTouchDown(true);
-					//Plays the note
-					new ThreadWrapper(waveArray.get(1)).run();
+					ae.playWave(event.getY()*2,true,1);
 					return true;                    
 				} else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-					waveArray.get(1).setTouchDown(false);
+					ae.stopWave(false,1);
 					return true;
 				}
 				gdt.onTouchEvent(event);
@@ -107,5 +85,4 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
-
 }
