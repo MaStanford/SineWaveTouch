@@ -40,7 +40,6 @@ public class AudioEngine {
 	 */
 	public boolean InitAudioEngine(){
 
-        
 		waveArray = new WaveArrayBuilder().generateWaveList(SIN_WAVE);
 		return true;
 	}

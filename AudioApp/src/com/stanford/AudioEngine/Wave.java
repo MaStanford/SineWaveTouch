@@ -1,6 +1,6 @@
 package com.stanford.AudioEngine;
 
-public class Wave {
+public abstract class Wave {
 	
     //The touchdown bool.
     protected boolean touchDown = false;
